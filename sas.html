@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опросник по физике</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .link {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Опросник по физике</h1>
+    <div id="quiz"></div>
+    <button onclick="submitQuiz()">Показать результат</button>
+    <div class="result" id="result"></div>
+    <div class="link" id="link-container">
+        <a id="link" href="https://www.example.com" target="_blank">Перейти на рынок физики</a>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { question: "Какой закон описывает движение тел?", options: ["Закон Ньютона", "Закон Бойля", "Закон Ома"], answer: 0 },
+        { question: "Что такое сила?", options: ["Мера инерции", "Мера взаимодействия", "Мера энергии"], answer: 1 },
+        { question: "Какой прибор измеряет давление?", options: ["Барометр", "Термометр", "Манометр"], answer: 0 },
+        { question: "Что такое энергия?", options: ["Способность выполнять работу", "Мера силы", "Мера скорости"], answer: 0 },
+        { question: "Какую еденицу измерения имеет скорость?", options: ["М/с", "Н", "Кг"], answer: 0 },
+        { question: "Какой закон описывает закон сохранения импульса?", options: ["Импульс сохраняется в замкнутой системе", "Сила равна массе, умноженной на ускорение", "Работа равна силе на перемещение"], answer: 0 },
+        { question: "Какую величину измеряет вольтметр?", options: ["Напряжение", "Ток", "Сопротивление"], answer: 0 },
+        { question: "Что такое гравитационная сила?", options: ["Сила притяжения между телами", "Сила, действующая в проводнике", "Сила, вызывающая движение"], answer: 0 },
+        { question: "Какой закон связывает силу, работу и энергию?", options: ["Закон Ома", "Закон сохранения энергии", "Закон Ньютона"], answer: 1 },
+        { question: "Какой прибор используется для измерения температуры?", options: ["Термометр", "Барометр", "Манометр"], answer: 0 },
+        { question: "Что такое закон сохранения энергии?", options: ["Энергия не может быть создана или уничтожена, только преобразована", "Энергия всегда равна нулю", "Энергия движется с постоянной скоростью"], answer: 0 },
+        { question: "В какой единице измеряется масса?", options: ["Килограмм", "Ньютон", "Джоуль"], answer: 0 },
+        { question: "Как соотносятся сила и ускорение?", options: ["Сила равна массе, умноженной на ускорение", "Сила и ускорение не связаны", "Ускорение равно времени"], answer: 0 },
+        { question: "Какой термин используется для описания однородного движения?", options: ["Равномерное движение", "Периодическое движение", "Ускоренное движение"], answer: 0 },
+        { question: "Как влияют температура на давление в газе при постоянном объеме?", options: ["Прямо пропорционально", "Обратно пропорционально", "Не влияют"], answer: 0 },
+    ];
+
+    function loadQuiz() {
+        const quizContainer = document.getElementById('quiz');
+        questions.forEach((q, index) => {
+            const questionElement = document.createElement('div');
+            questionElement.classList.add('question');
+            questionElement.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+            q.options.forEach((option, i) => {
+                questionElement.innerHTML += `
+                    <label>
+                        <input type="radio" name="question${index}" value="${i}">
+                        ${option}
+                    </label><br>
+                `;
+            });
+            quizContainer.appendChild(questionElement);
+        });
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        questions.forEach((q, index) => {
+            const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+            if (selectedOption && parseInt(selectedOption.value) === q.answer) {
+                score++;
+            }
+        });
+        document.getElementById('result').innerText = `Ваш результат: ${score} из ${questions.length}`;
+        const linkContainer = document.getElementById('link-container');
+        linkContainer.style.display = 'block';
+    }
+
+    loadQuiz();
+</script>
+
+</body>
+</html>
